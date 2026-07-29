@@ -1,0 +1,19 @@
+# Example Fly.io config — adjust `app` to a unique name, then run `fly launch --no-deploy`
+# to generate/merge the rest, and `fly deploy` once OPENAI_API_KEY and DATABASE_URL are set
+# via `fly secrets set`.
+app = "lead-qualifier-api"
+primary_region = "sin"
+
+[build]
+
+[http_service]
+  internal_port = 8000
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 512

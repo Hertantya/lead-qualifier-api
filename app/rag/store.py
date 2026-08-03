@@ -3,6 +3,8 @@
 pgvector is just a Postgres extension: chunks live in an ordinary table with
 one extra VECTOR column, and similarity search is a normal SQL ORDER BY.
 """
+from typing import LiteralString, cast
+
 import psycopg
 from pgvector.psycopg import register_vector
 
@@ -22,7 +24,11 @@ def get_connection() -> psycopg.Connection:
 
 
 def init_schema(conn: psycopg.Connection) -> None:
-    conn.execute(
+    # EMBEDDING_DIM is a hardcoded internal constant, not user input, so
+    # interpolating it into the DDL is safe despite the f-string losing its
+    # LiteralString type.
+    query = cast(
+        LiteralString,
         f"""
         CREATE TABLE IF NOT EXISTS doc_chunks (
             id SERIAL PRIMARY KEY,
@@ -31,8 +37,9 @@ def init_schema(conn: psycopg.Connection) -> None:
             text TEXT NOT NULL,
             embedding VECTOR({EMBEDDING_DIM}) NOT NULL
         )
-        """
+        """,
     )
+    conn.execute(query)
 
 
 def insert_chunks(conn: psycopg.Connection, chunks: list[Chunk], embeddings: list[list[float]]) -> None:
@@ -51,7 +58,7 @@ def search(conn: psycopg.Connection, query_embedding: list[float], top_k: int = 
             """
             SELECT source, chunk_index, text
             FROM doc_chunks
-            ORDER BY embedding <=> %s
+            ORDER BY embedding <=> %s::vector
             LIMIT %s
             """,
             (query_embedding, top_k),

@@ -2,6 +2,11 @@
 import json
 
 from openai import OpenAI
+from openai.types.chat import (
+    ChatCompletionFunctionToolParam,
+    ChatCompletionMessageFunctionToolCall,
+    ChatCompletionMessageParam,
+)
 
 from app import config
 from app.models import QualifyRequest, QualifyResponse, ToolQualifyResponse
@@ -13,7 +18,7 @@ def get_client() -> OpenAI:
     """Lazily construct the OpenAI client so importing this module never requires a key."""
     global _client
     if _client is None:
-        _client = OpenAI(api_key=config.OPENAI_API_KEY)
+        _client = OpenAI(api_key=config.OPENAI_API_KEY, base_url=config.OPENAI_BASE_URL)
     return _client
 
 
@@ -57,7 +62,7 @@ def _lookup_company_firmographics(company_name: str) -> dict:
     )
 
 
-TOOLS = [
+TOOLS: list[ChatCompletionFunctionToolParam] = [
     {
         "type": "function",
         "function": {
@@ -81,7 +86,7 @@ _AVAILABLE_TOOLS = {"lookup_company_firmographics": _lookup_company_firmographic
 def qualify_lead_with_tools(req: QualifyRequest, max_turns: int = 3) -> ToolQualifyResponse:
     """Same qualification task, but the model can call a tool to fetch facts first."""
     client = get_client()
-    messages: list[dict] = [
+    messages: list[ChatCompletionMessageParam] = [
         {
             "role": "system",
             "content": QUALIFY_SYSTEM_PROMPT
@@ -101,8 +106,10 @@ def qualify_lead_with_tools(req: QualifyRequest, max_turns: int = 3) -> ToolQual
         if not choice.message.tool_calls:
             break
 
-        messages.append(choice.message.model_dump(exclude_unset=True))
+        messages.append(choice.message.model_dump(exclude_unset=True))  # type: ignore[arg-type]
         for call in choice.message.tool_calls:
+            if not isinstance(call, ChatCompletionMessageFunctionToolCall):
+                continue
             fn = _AVAILABLE_TOOLS[call.function.name]
             args = json.loads(call.function.arguments)
             result = fn(**args)

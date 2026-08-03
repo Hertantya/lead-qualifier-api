@@ -6,6 +6,11 @@ back, and we repeat until the model is ready to give a final answer.
 """
 import json
 
+from openai.types.chat import (
+    ChatCompletionFunctionToolParam,
+    ChatCompletionMessageFunctionToolCall,
+    ChatCompletionMessageParam,
+)
 from pydantic import BaseModel
 
 from app import config
@@ -40,7 +45,7 @@ def _search_company_info(company_name: str) -> dict:
     )
 
 
-AGENT_TOOLS = [
+AGENT_TOOLS: list[ChatCompletionFunctionToolParam] = [
     {
         "type": "function",
         "function": {
@@ -65,7 +70,7 @@ class _AgentFinalAnswer(BaseModel):
 
 def research_lead(company_name: str, max_turns: int = 4) -> ResearchLeadResponse:
     client = get_client()
-    messages: list[dict] = [
+    messages: list[ChatCompletionMessageParam] = [
         {"role": "system", "content": AGENT_SYSTEM_PROMPT},
         {"role": "user", "content": f"Research this company and draft outreach: {company_name}"},
     ]
@@ -81,8 +86,10 @@ def research_lead(company_name: str, max_turns: int = 4) -> ResearchLeadResponse
         if not choice.message.tool_calls:
             break  # model is done gathering facts, ready for a final answer
 
-        messages.append(choice.message.model_dump(exclude_unset=True))
+        messages.append(choice.message.model_dump(exclude_unset=True))  # type: ignore[arg-type]
         for call in choice.message.tool_calls:
+            if not isinstance(call, ChatCompletionMessageFunctionToolCall):
+                continue
             fn = _AVAILABLE_TOOLS[call.function.name]
             args = json.loads(call.function.arguments)
             result = fn(**args)

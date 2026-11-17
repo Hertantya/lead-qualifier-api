@@ -24,7 +24,7 @@ Request flow: `app/main.py` → `app/routers/*` (thin, one call each) → logic 
 There are three LLM patterns, and they share one shape:
 - **Structured output**: `client.beta.chat.completions.parse(response_format=<PydanticModel>)`. A `None` parsed result is treated as a refusal and raises `ValueError`.
 - **Tool loop** (`qualify_lead_with_tools` in `app/llm.py`, `research_lead` in `app/agent/loop.py`): call with `tools=`, run any `tool_calls` locally through a `_AVAILABLE_TOOLS` name→function dict, add `role: "tool"` messages, and repeat up to `max_turns`. Then make a final `parse` call for the structured answer. The two loops are separate copies. If you change one, check whether the other needs the same change.
-- **RAG** (`app/rag/`): `chunking` → `embeddings` → `store` (raw psycopg + pgvector, table `doc_chunks`, cosine `<=>`) → `qa` (stuffs the top-k chunks tagged `[source:index]` into the prompt). `EMBEDDING_DIM = 1536` in `store.py` is tied to `text-embedding-3-small`, so changing the embedding model means changing the schema too. `ingest_docs` only appends rows, so running it again duplicates chunks.
+- **RAG** (`app/rag/`): `chunking` → `embeddings` → `store` (raw psycopg + pgvector, table `doc_chunks`, cosine `<=>`) → `qa` (stuffs the top-k chunks tagged `[source:index]` into the prompt). `EMBEDDING_DIM = 1536` in `store.py` is tied to `text-embedding-3-small`, so changing the embedding model means changing the schema too. `ingest_docs` truncates `doc_chunks` before inserting, so re-running it replaces the previous content.
 
 The tools (`_lookup_company_firmographics`, `_search_company_info`) are mocked with hardcoded dicts that stand in for real enrichment APIs.
 

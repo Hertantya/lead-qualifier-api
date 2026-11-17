@@ -1,0 +1,211 @@
+{
+  "node_count": 161,
+  "unverified_node_count": 0,
+  "raw_edge_count": 346,
+  "non_object_edges": 0,
+  "missing_endpoint_edges": 0,
+  "dangling_endpoint_edges": 22,
+  "external_reference_edges": 0,
+  "self_loop_edges": 0,
+  "valid_candidate_edges": 324,
+  "exact_duplicate_edges": 0,
+  "directed_unique_endpoint_pairs": 293,
+  "directed_same_endpoint_collapsed_edges": 31,
+  "undirected_unique_endpoint_pairs": 293,
+  "undirected_same_endpoint_collapsed_edges": 31,
+  "same_endpoint_group_count": 28,
+  "relation_variant_groups": 28,
+  "source_file_variant_groups": 0,
+  "source_location_variant_groups": 0,
+  "context_variant_groups": 0,
+  "post_build_graph_type": "Graph",
+  "post_build_node_count": 173,
+  "post_build_edge_count": 315,
+  "post_build_error": "",
+  "producer_suppression": {
+    "path": "C:\\Users\\lenovo\\AppData\\Roaming\\uv\\tools\\graphifyy\\Lib\\site-packages\\graphify\\extract.py",
+    "total_sites": 12,
+    "sites": [
+      {
+        "line": 1764,
+        "name": "seen_ids",
+        "tuple_arity": 0,
+        "sample": "seen_ids = {n[\"id\"] for n in nodes}"
+      },
+      {
+        "line": 2328,
+        "name": "seen_ids",
+        "tuple_arity": 0,
+        "sample": "seen_ids = {n[\"id\"] for n in nodes}"
+      },
+      {
+        "line": 2330,
+        "name": "seen_doc_refs",
+        "tuple_arity": 0,
+        "sample": "seen_doc_refs: set[str] = set()"
+      },
+      {
+        "line": 2808,
+        "name": "seen_ids",
+        "tuple_arity": 0,
+        "sample": "seen_ids: set[str] = {n[\"id\"] for n in nodes}"
+      },
+      {
+        "line": 2955,
+        "name": "seen_ids",
+        "tuple_arity": 0,
+        "sample": "seen_ids = {n.get(\"id\") for n in nodes}"
+      },
+      {
+        "line": 3807,
+        "name": "seen_keys",
+        "tuple_arity": 0,
+        "sample": "seen_keys: set[tuple] = set()"
+      },
+      {
+        "line": 3980,
+        "name": "seen_keys",
+        "tuple_arity": 0,
+        "sample": "seen_keys: set[tuple] = set()"
+      },
+      {
+        "line": 6385,
+        "name": "seen_ids",
+        "tuple_arity": 0,
+        "sample": "seen_ids: set[str] = set()"
+      },
+      {
+        "line": 6493,
+        "name": "seen_ids",
+        "tuple_arity": 0,
+        "sample": "seen_ids: set[str] = set()"
+      },
+      {
+        "line": 6572,
+        "name": "seen_ids",
+        "tuple_arity": 0,
+        "sample": "seen_ids: set[str] = set()"
+      },
+      {
+        "line": 7087,
+        "name": "seen_ids",
+        "tuple_arity": 0,
+        "sample": "seen_ids: set[str] = set()"
+      },
+      {
+        "line": 7088,
+        "name": "seen_edges",
+        "tuple_arity": 4,
+        "sample": "seen_edges: set[tuple[str, str, str, str | None]] = set()"
+      }
+    ],
+    "error": ""
+  },
+  "examples": [
+    {
+      "source": "app_agent_loop_research_lead",
+      "target": "app_models_researchleadresponse",
+      "edge_count": 3,
+      "relations": [
+        "calls",
+        "references",
+        "uses"
+      ],
+      "source_files": [
+        "app/agent/loop.py"
+      ],
+      "source_locations": [
+        "L110",
+        "L71"
+      ],
+      "contexts": [
+        "",
+        "call",
+        "return_type"
+      ]
+    },
+    {
+      "source": "app_llm_qualify_lead_with_tools",
+      "target": "app_models_toolqualifyresponse",
+      "edge_count": 3,
+      "relations": [
+        "calls",
+        "references",
+        "uses"
+      ],
+      "source_files": [
+        "app/llm.py"
+      ],
+      "source_locations": [
+        "L129",
+        "L86"
+      ],
+      "contexts": [
+        "",
+        "call",
+        "return_type"
+      ]
+    },
+    {
+      "source": "app_rag_qa_ask",
+      "target": "app_models_askresponse",
+      "edge_count": 3,
+      "relations": [
+        "calls",
+        "references",
+        "uses"
+      ],
+      "source_files": [
+        "app/rag/qa.py"
+      ],
+      "source_locations": [
+        "L15",
+        "L38"
+      ],
+      "contexts": [
+        "",
+        "call",
+        "return_type"
+      ]
+    },
+    {
+      "source": "app_agent_loop",
+      "target": "app_agent_loop_search_company_info",
+      "edge_count": 2,
+      "relations": [
+        "contains",
+        "indirect_call"
+      ],
+      "source_files": [
+        "app/agent/loop.py"
+      ],
+      "source_locations": [
+        "L28",
+        "L63"
+      ],
+      "contexts": [
+        "",
+        "collection"
+      ]
+    },
+    {
+      "source": "app_llm_qualify_lead",
+      "target": "app_models_qualifyrequest",
+      "edge_count": 2,
+      "relations": [
+        "references",
+        "uses"
+      ],
+      "source_files": [
+        "app/llm.py"
+      ],
+      "source_locations": [
+        "L34"
+      ],
+      "contexts": [
+        "",
+        "parameter_type"
+      ]
+    }
+  ]
+}

@@ -383,7 +383,7 @@ Ini persis pola yang menjadi dasar dari setiap framework "AI agent" (LangGraph, 
 
 #### `main() -> None`
 **EN:** The whole ingestion pipeline, step by step:
-1. Open a database connection and make sure the `doc_chunks` table exists (`store.init_schema`).
+1. Open a database connection, make sure the `doc_chunks` table exists (`store.init_schema`), then clear it (`TRUNCATE`) so this run replaces the old content.
 2. Read every `.md` file in the `docs/` folder.
 3. Split each file's text into chunks using `chunk_text()`.
 4. Send *all* chunk texts to `embed_texts()` in one batch call, getting back one embedding per chunk.
@@ -391,15 +391,15 @@ Ini persis pola yang menjadi dasar dari setiap framework "AI agent" (LangGraph, 
 6. Print how many chunks were ingested, then close the connection.
 
 **ID:** Seluruh pipeline ingestion, langkah demi langkah:
-1. Membuka koneksi database dan memastikan tabel `doc_chunks` ada (`store.init_schema`).
+1. Membuka koneksi database, memastikan tabel `doc_chunks` ada (`store.init_schema`), lalu mengosongkannya (`TRUNCATE`) agar proses ini menggantikan isi sebelumnya.
 2. Membaca setiap file `.md` di folder `docs/`.
 3. Memecah teks setiap file menjadi chunk menggunakan `chunk_text()`.
 4. Mengirim *semua* teks chunk ke `embed_texts()` dalam satu panggilan batch, mendapatkan kembali satu embedding per chunk.
 5. Menyimpan setiap chunk beserta embedding-nya ke database dengan `store.insert_chunks()`.
 6. Mencetak berapa banyak chunk yang berhasil di-ingest, lalu menutup koneksi.
 
-**EN — important note:** This script has no duplicate-check — running it twice inserts everything twice. Re-run it only when the files in `docs/` change, and consider clearing the table first if you do.
-**ID — catatan penting:** Script ini tidak memiliki pengecekan duplikat — menjalankannya dua kali akan menyisipkan semuanya dua kali. Jalankan ulang hanya ketika file di `docs/` berubah, dan pertimbangkan untuk mengosongkan tabel terlebih dahulu jika kamu melakukannya.
+**EN - important note:** This script truncates `doc_chunks` before inserting, so re-running it replaces the previous content instead of duplicating it. Re-run it whenever the files in `docs/` change.
+**ID - catatan penting:** Script ini mengosongkan `doc_chunks` sebelum menyisipkan, jadi menjalankannya ulang akan mengganti isi sebelumnya, bukan menduplikasinya. Jalankan ulang setiap kali file di `docs/` berubah.
 
 ---
 

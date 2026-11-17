@@ -1,118 +1,134 @@
-# Graph Report - lead-qualifier-api  (2026-10-12)
+# Graph Report - lead-qualifier-api  (2026-11-13)
 
 ## Corpus Check
-- 29 files · ~11,511 words
+- 32 files · ~11,789 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 5 file(s) not represented in the graph (top: (none) 3, .example 1, .toml 1)
 
 ## Summary
-- 139 nodes · 295 edges · 10 communities (7 shown, 3 thin omitted)
-- Extraction: 88% EXTRACTED · 12% INFERRED · 0% AMBIGUOUS · INFERRED: 35 edges (avg confidence: 0.9)
+- 204 nodes · 341 edges · 16 communities (11 shown, 5 thin omitted)
+- Extraction: 92% EXTRACTED · 8% INFERRED · 0% AMBIGUOUS · INFERRED: 27 edges (avg confidence: 0.9)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `6e8795dc`
+- Built from commit: `95303730`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
-- Infra, CI and Knowledge Docs
-- Lead Qualification (LLM)
-- RAG Ask Endpoint
-- Agent Research Loop
-- Chunking and Embedding
-- Config and Vector Store
-- Mocked Enrichment Tools
+- API Endpoints and Agent Loop
+- Architecture and Design Docs
+- Chunking and Vector Storage
+- LLM Configuration and RAG QA
+- Lead Qualification Endpoints
+- Docker Compose App Services
+- CI Workflow
+- Docker Compose Database
+- Product and Refund Policies
+- Python Dependencies
+- Origin of the Word Robot
+- Fun Fact: Honey
+- Fun Fact: Lightning
+- Fun Fact: Octopuses
 
 ## God Nodes (most connected - your core abstractions)
-1. `get_client()` - 13 edges
+1. `Lead Qualifier API Code Documentation` - 12 edges
 2. `QualifyResponse` - 11 edges
-3. `main()` - 10 edges
-4. `qualify_lead_with_tools()` - 10 edges
-5. `Project Study Guide` - 10 edges
+3. `get_client()` - 11 edges
+4. `AskResponse` - 9 edges
+5. `ResearchLeadResponse` - 9 edges
 6. `ToolQualifyResponse` - 9 edges
-7. `AskResponse` - 9 edges
-8. `ResearchLeadResponse` - 9 edges
-9. `ask()` - 9 edges
-10. `chunk_text()` - 9 edges
+7. `Project Study Guide` - 9 edges
+8. `Unpinned Python application and test dependencies` - 9 edges
+9. `QualifyRequest` - 8 edges
+10. `ask()` - 8 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `Architecture` --references--> `research_lead()`  [INFERRED]
-  CLAUDE.md → app/agent/loop.py
-- `Architecture` --references--> `get_client()`  [INFERRED]
-  CLAUDE.md → app/llm.py
-- `Architecture` --references--> `qualify_lead_with_tools()`  [INFERRED]
-  CLAUDE.md → app/llm.py
-- `Architecture` --references--> `_search_company_info()`  [INFERRED]
-  CLAUDE.md → app/agent/loop.py
-- `Architecture` --references--> `_lookup_company_firmographics()`  [INFERRED]
-  CLAUDE.md → app/llm.py
+- `main()` --calls--> `embed_texts()`  [EXTRACTED]
+  scripts/ingest_docs.py → app/rag/embeddings.py
+- `fake_research_lead()` --calls--> `ResearchLeadResponse`  [EXTRACTED]
+  tests/test_agent.py → app/models.py
+- `fake_qualify_lead()` --calls--> `QualifyResponse`  [EXTRACTED]
+  tests/test_qualify.py → app/models.py
+- `fake_qualify_with_tools()` --calls--> `ToolQualifyResponse`  [EXTRACTED]
+  tests/test_qualify.py → app/models.py
+- `test_chunk_text_keeps_short_input_as_one_chunk()` --calls--> `chunk_text()`  [EXTRACTED]
+  tests/test_chunking.py → app/rag/chunking.py
 
 ## Import Cycles
 - None detected.
 
 ## Hyperedges (group relationships)
-- **Hand-rolled tool-calling loops with mocked CRM tools** — project_study_guide_tool_calling_loop, app_llm_qualify_lead_with_tools, app_agent_loop_research_lead, app_llm_lookup_company_firmographics, app_agent_loop_search_company_info [EXTRACTED 1.00]
-- **Running tests without a real API key** — _github_workflows_ci_test_job, project_study_guide_router_boundary_mocking, code_documentation_lazy_client [INFERRED 0.85]
-- **RAG pipeline: sample docs ingested into pgvector and queried by /ask** — docs_product_overview, docs_refund_policy, scripts_ingest_docs_main, docker_compose_db, app_rag_qa_ask, project_study_guide_rag_from_scratch [INFERRED 0.85]
+- **Refund entitlement combines purchase age, annual-contract remainder, MSA precedence and processing rules** — docs_refund_policy_refund_policy, docs_refund_policy_prorated_refund, docs_refund_policy_master_service_agreement, docs_refund_policy_refund_request [EXTRACTED 1.00]
+- **Three Core LLM Patterns Sharing One Shape** — claude_three_llm_patterns, code_documentation_structured_output, code_documentation_tool_calling_loop, code_documentation_rag_pipeline [EXTRACTED 1.00]
+- **End-to-End RAG Pipeline Components** — code_documentation_rag_pipeline, code_documentation_paragraph_chunking_overlap, code_documentation_pgvector_cosine_search, code_documentation_citation_tagging, code_documentation_ingest_pipeline [EXTRACTED 1.00]
+- **Framework-Free Learning Design Philosophy** — claude_no_agent_frameworks, project_study_guide_fundamentals_first, project_study_guide_mock_swappability, readme_design_notes [INFERRED 0.85]
 
-## Communities (10 total, 3 thin omitted)
+## Communities (16 total, 5 thin omitted)
 
-### Community 0 - "Infra, CI and Knowledge Docs"
+### Community 0 - "API Endpoints and Agent Loop"
+Cohesion: 0.10
+Nodes (15): _AgentFinalAnswer, research_lead(), _search_company_info(), health(), AskRequest, AskResponse, Citation, ResearchLeadRequest (+7 more)
+
+### Community 1 - "Architecture and Design Docs"
 Cohesion: 0.13
-Nodes (20): CI Workflow (ci.yml), CI test job (pytest -q, Python 3.12, dummy OPENAI_API_KEY), init_schema(), Code Documentation (EN/ID), EMBEDDING_DIM 1536 coupling to text-embedding-3-small, Ingestion has no duplicate check, app service (FastAPI container), db service (pgvector/pgvector:pg16) (+12 more)
+Nodes (22): CLAUDE.md Repository Guidance, graphify Knowledge Graph Workflow, Lazy OpenAI Client via app.llm.get_client(), Three Shared LLM Patterns (Structured Output, Tool Loop, RAG), Lead Qualifier API Code Documentation, Hand-Rolled Agent Loop (research_lead), Source:Index Citation Tagging, Environment-Only Configuration (app/config.py) (+14 more)
 
-### Community 1 - "Lead Qualification (LLM)"
-Cohesion: 0.22
+### Community 2 - "Chunking and Vector Storage"
+Cohesion: 0.13
+Nodes (9): Chunk, chunk_text(), get_connection(), init_schema(), insert_chunks(), search(), main(), test_chunk_text_keeps_short_input_as_one_chunk() (+1 more)
+
+### Community 3 - "LLM Configuration and RAG QA"
+Cohesion: 0.19
+Nodes (4): get_client(), _lookup_company_firmographics(), embed_texts(), ask()
+
+### Community 4 - "Lead Qualification Endpoints"
+Cohesion: 0.23
 Nodes (11): qualify_lead(), qualify_lead_with_tools(), QualifyRequest, QualifyResponse, ToolQualifyResponse, qualify_lead_endpoint(), qualify_lead_with_tools_endpoint(), test_qualify_lead() (+3 more)
 
-### Community 2 - "RAG Ask Endpoint"
-Cohesion: 0.16
-Nodes (7): health(), AskRequest, AskResponse, Citation, ask_endpoint(), test_ask_endpoint(), fake_ask()
+### Community 5 - "Docker Compose App Services"
+Cohesion: 0.12
+Nodes (16): build, depends_on, environment, ports, volumes, condition, db, DATABASE_URL (+8 more)
 
-### Community 3 - "Agent Research Loop"
-Cohesion: 0.21
-Nodes (7): _AgentFinalAnswer, research_lead(), ResearchLeadRequest, ResearchLeadResponse, research_lead_endpoint(), test_research_lead_endpoint(), fake_research_lead()
+### Community 6 - "CI Workflow"
+Cohesion: 0.12
+Nodes (15): OPENAI_API_KEY, jobs, test, name, on, pull_request, push, env (+7 more)
 
-### Community 4 - "Chunking and Embedding"
+### Community 7 - "Docker Compose Database"
 Cohesion: 0.15
-Nodes (7): Chunk, chunk_text(), get_connection(), insert_chunks(), search(), test_chunk_text_keeps_short_input_as_one_chunk(), test_chunk_text_splits_long_input_into_multiple_chunks()
+Nodes (13): environment, healthcheck, image, ports, volumes, POSTGRES_DB, POSTGRES_PASSWORD, POSTGRES_USER (+5 more)
 
-### Community 5 - "Config and Vector Store"
-Cohesion: 0.17
-Nodes (3): get_client(), embed_texts(), ask()
+### Community 8 - "Product and Refund Policies"
+Cohesion: 0.20
+Nodes (9): Enterprise: unlimited seats, custom enrichment, onboarding, SSO, account manager, 100 requests/minute/key, Enterprise support: 24/7 and 1-hour response SLA for critical issues, Growth: 20 seats, 5,000 enriched leads/month, HubSpot and Salesforce integrations, priority support, 100 requests/minute/key, Standard support: Monday-Friday, 9am-6pm Singapore time, Starter: 3 seats, 500 enriched leads/month, email support, 20 API requests/minute/key, Signed Enterprise Master Service Agreement cancellation terms override the default refund policy, After 30 days: pro-rated refund for remaining months of an annual contract, Refund policy: full refund within 30 days of purchase, no questions asked (+1 more)
 
-### Community 6 - "Mocked Enrichment Tools"
-Cohesion: 0.22
-Nodes (7): _search_company_info(), _lookup_company_firmographics(), Architecture, Commands, graphify, Tests, Mocked CRM/Enrichment Tools (Acme Corp, Globex)
+### Community 9 - "Python Dependencies"
+Cohesion: 0.20
+Nodes (10): Unpinned Python application and test dependencies, fastapi, httpx, openai, pgvector, psycopg[binary], pydantic, pytest (+2 more)
 
-## Ambiguous Edges - Review These
-- `Product API Rate Limits (100/20 rpm)` → `Known Gaps (no auth/rate-limit, no reranking)`  [AMBIGUOUS]
-  docs/product_overview.md · relation: conceptually_related_to
+### Community 10 - "Origin of the Word Robot"
+Cohesion: 1.00
+Nodes (3): Karel Čapek: credited in the source with coining robot in R.U.R., R.U.R.: 1920 play, Robot: word derived from Czech robota, meaning forced labor
 
 ## Knowledge Gaps
-- **2 isolated node(s):** `Support Hours and Enterprise SLA`, `30-day full refund, then pro-rated`
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 41 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **3 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **20 isolated node(s):** `graphify Knowledge Graph Workflow`, `Deployment on Railway or Fly.io`, `Honey: source claims sealed Egyptian tomb pots remain edible after 3,000+ years`, `Lightning: about 30,000 K, approximately five times hotter than the Sun's surface`, `Octopuses: three hearts, two stop beating while swimming according to the source` (+15 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 83 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **5 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `get_client()` connect `Config and Vector Store` to `Infra, CI and Knowledge Docs`, `Lead Qualification (LLM)`, `Agent Research Loop`, `Mocked Enrichment Tools`?**
-  _High betweenness centrality (0.128) - this node is a cross-community bridge._
+- **Why does `get_client()` connect `LLM Configuration and RAG QA` to `API Endpoints and Agent Loop`, `Lead Qualification Endpoints`?**
+  _High betweenness centrality (0.022) - this node is a cross-community bridge._
 - **Are the 3 inferred relationships involving `QualifyResponse` (e.g. with `qualify_lead()` and `qualify_lead_with_tools()`) actually correct?**
   _`QualifyResponse` has 3 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `Support Hours and Enterprise SLA`, `30-day full refund, then pro-rated` to the rest of the system?**
-  _2 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `Infra, CI and Knowledge Docs` be split into smaller, more focused modules?**
-  _Cohesion score 0.12643678160919541 - nodes in this community are weakly interconnected._
-- **Why does `ask()` connect `Config and Vector Store` to `Infra, CI and Knowledge Docs`, `RAG Ask Endpoint`, `Chunking and Embedding`?**
-  _High betweenness centrality (0.087) - this node is a cross-community bridge._
-- **Are the 2 inferred relationships involving `main()` (e.g. with `Product Overview (sample KB doc)` and `Refund Policy (sample KB doc)`) actually correct?**
-  _`main()` has 2 INFERRED edges - model-reasoned connections that need verification._
-
-### Low-confidence Hints
-_AMBIGUOUS edges — the extractor was unsure. Verify before acting on these._
-
-- **What is the exact relationship between `Product API Rate Limits (100/20 rpm)` and `Known Gaps (no auth/rate-limit, no reranking)`?**
-  _Edge tagged AMBIGUOUS (relation: conceptually_related_to) - confidence is low._
+- **What connects `graphify Knowledge Graph Workflow`, `Deployment on Railway or Fly.io`, `Honey: source claims sealed Egyptian tomb pots remain edible after 3,000+ years` to the rest of the system?**
+  _20 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `API Endpoints and Agent Loop` be split into smaller, more focused modules?**
+  _Cohesion score 0.09716599190283401 - nodes in this community are weakly interconnected._
+- **Why does `ask()` connect `LLM Configuration and RAG QA` to `API Endpoints and Agent Loop`, `Chunking and Vector Storage`?**
+  _High betweenness centrality (0.014) - this node is a cross-community bridge._
+- **Should `Architecture and Design Docs` be split into smaller, more focused modules?**
+  _Cohesion score 0.1310344827586207 - nodes in this community are weakly interconnected._
+- **Should `Chunking and Vector Storage` be split into smaller, more focused modules?**
+  _Cohesion score 0.13333333333333333 - nodes in this community are weakly interconnected._

@@ -25,6 +25,10 @@ services:
       OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4o-mini}
       OPENAI_EMBEDDING_MODEL: ${OPENAI_EMBEDDING_MODEL:-text-embedding-3-small}
       DATABASE_URL: postgresql://vault:vault@db:5432/leadqualifier
+    # Option A: live local files instead of the ones baked into the image
+    volumes:
+      - ./docs:/app/docs:ro
+      - ./scripts:/app/scripts:ro   # optional: also makes ingest_docs.py edits live
     depends_on:
       db:
         condition: service_healthy

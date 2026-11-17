@@ -68,6 +68,30 @@ Then ingest the sample docs into the running Postgres container:
 docker compose exec app python -m scripts.ingest_docs
 ```
 
+### Refreshing the knowledge base (after editing `docs/`)
+
+The database keeps its own embedded copy of `docs/` — editing a markdown file
+does not change what `/ask` returns until you re-ingest. After adding, editing,
+or deleting any `docs/*.md`, run this one command:
+
+```bash
+docker compose exec app python -m scripts.ingest_docs
+```
+
+That's the whole refresh. The script truncates `doc_chunks` first, so re-runs
+replace the old content instead of duplicating it. `docker-compose.yml` bind-mounts
+`./docs` into the container, so your local edits are visible without rebuilding.
+No API restart is needed either: `/ask` queries Postgres on every request.
+
+Running the API locally instead of in Docker? Same command from your venv:
+
+```bash
+.venv\Scripts\python -m scripts.ingest_docs
+```
+
+You only need `docker compose up --build` again when `Dockerfile`,
+`requirements.txt`, or the app code changes — not for doc edits.
+
 ## Tests
 
 ```bash

@@ -16,6 +16,9 @@ def main() -> None:
     conn = store.get_connection()
     try:
         store.init_schema(conn)
+        # Re-ingest = replace, not append, so re-runs after editing docs/
+        # don't pile up stale duplicate chunks.
+        conn.execute("TRUNCATE doc_chunks RESTART IDENTITY")
 
         all_chunks = []
         for path in sorted(DOCS_DIR.glob("*.md")):

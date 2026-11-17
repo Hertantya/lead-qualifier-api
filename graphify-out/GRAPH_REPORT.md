@@ -1,17 +1,17 @@
-# Graph Report - lead-qualifier-api  (2026-11-13)
+# Graph Report - lead-qualifier-api  (2026-11-17)
 
 ## Corpus Check
-- 32 files · ~11,789 words
+- 33 files · ~11,793 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 5 file(s) not represented in the graph (top: (none) 3, .example 1, .toml 1)
 
 ## Summary
-- 204 nodes · 341 edges · 16 communities (11 shown, 5 thin omitted)
+- 206 nodes · 342 edges · 17 communities (11 shown, 6 thin omitted)
 - Extraction: 92% EXTRACTED · 8% INFERRED · 0% AMBIGUOUS · INFERRED: 27 edges (avg confidence: 0.9)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `95303730`
+- Built from commit: `30c715b0`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -30,6 +30,7 @@
 - Fun Fact: Honey
 - Fun Fact: Lightning
 - Fun Fact: Octopuses
+- something.md
 
 ## God Nodes (most connected - your core abstractions)
 1. `Lead Qualifier API Code Documentation` - 12 edges
@@ -64,11 +65,11 @@
 - **End-to-End RAG Pipeline Components** — code_documentation_rag_pipeline, code_documentation_paragraph_chunking_overlap, code_documentation_pgvector_cosine_search, code_documentation_citation_tagging, code_documentation_ingest_pipeline [EXTRACTED 1.00]
 - **Framework-Free Learning Design Philosophy** — claude_no_agent_frameworks, project_study_guide_fundamentals_first, project_study_guide_mock_swappability, readme_design_notes [INFERRED 0.85]
 
-## Communities (16 total, 5 thin omitted)
+## Communities (17 total, 6 thin omitted)
 
 ### Community 0 - "API Endpoints and Agent Loop"
-Cohesion: 0.10
-Nodes (15): _AgentFinalAnswer, research_lead(), _search_company_info(), health(), AskRequest, AskResponse, Citation, ResearchLeadRequest (+7 more)
+Cohesion: 0.13
+Nodes (13): research_lead(), health(), AskRequest, AskResponse, Citation, ResearchLeadRequest, ResearchLeadResponse, research_lead_endpoint() (+5 more)
 
 ### Community 1 - "Architecture and Design Docs"
 Cohesion: 0.13
@@ -79,24 +80,24 @@ Cohesion: 0.13
 Nodes (9): Chunk, chunk_text(), get_connection(), init_schema(), insert_chunks(), search(), main(), test_chunk_text_keeps_short_input_as_one_chunk() (+1 more)
 
 ### Community 3 - "LLM Configuration and RAG QA"
-Cohesion: 0.19
-Nodes (4): get_client(), _lookup_company_firmographics(), embed_texts(), ask()
+Cohesion: 0.13
+Nodes (6): _AgentFinalAnswer, _search_company_info(), get_client(), _lookup_company_firmographics(), embed_texts(), ask()
 
 ### Community 4 - "Lead Qualification Endpoints"
 Cohesion: 0.23
 Nodes (11): qualify_lead(), qualify_lead_with_tools(), QualifyRequest, QualifyResponse, ToolQualifyResponse, qualify_lead_endpoint(), qualify_lead_with_tools_endpoint(), test_qualify_lead() (+3 more)
 
 ### Community 5 - "Docker Compose App Services"
-Cohesion: 0.12
-Nodes (16): build, depends_on, environment, ports, volumes, condition, db, DATABASE_URL (+8 more)
+Cohesion: 0.15
+Nodes (13): build, depends_on, environment, ports, volumes, condition, db, DATABASE_URL (+5 more)
 
 ### Community 6 - "CI Workflow"
 Cohesion: 0.12
 Nodes (15): OPENAI_API_KEY, jobs, test, name, on, pull_request, push, env (+7 more)
 
 ### Community 7 - "Docker Compose Database"
-Cohesion: 0.15
-Nodes (13): environment, healthcheck, image, ports, volumes, POSTGRES_DB, POSTGRES_PASSWORD, POSTGRES_USER (+5 more)
+Cohesion: 0.12
+Nodes (16): environment, healthcheck, image, ports, volumes, POSTGRES_DB, POSTGRES_PASSWORD, POSTGRES_USER (+8 more)
 
 ### Community 8 - "Product and Refund Policies"
 Cohesion: 0.20
@@ -112,20 +113,20 @@ Nodes (3): Karel Čapek: credited in the source with coining robot in R.U.R., R.
 
 ## Knowledge Gaps
 - **20 isolated node(s):** `graphify Knowledge Graph Workflow`, `Deployment on Railway or Fly.io`, `Honey: source claims sealed Egyptian tomb pots remain edible after 3,000+ years`, `Lightning: about 30,000 K, approximately five times hotter than the Sun's surface`, `Octopuses: three hearts, two stop beating while swimming according to the source` (+15 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 83 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **5 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 85 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **6 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `get_client()` connect `LLM Configuration and RAG QA` to `API Endpoints and Agent Loop`, `Lead Qualification Endpoints`?**
-  _High betweenness centrality (0.022) - this node is a cross-community bridge._
+  _High betweenness centrality (0.021) - this node is a cross-community bridge._
 - **Are the 3 inferred relationships involving `QualifyResponse` (e.g. with `qualify_lead()` and `qualify_lead_with_tools()`) actually correct?**
   _`QualifyResponse` has 3 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `graphify Knowledge Graph Workflow`, `Deployment on Railway or Fly.io`, `Honey: source claims sealed Egyptian tomb pots remain edible after 3,000+ years` to the rest of the system?**
   _20 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `API Endpoints and Agent Loop` be split into smaller, more focused modules?**
-  _Cohesion score 0.09716599190283401 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.12688172043010754 - nodes in this community are weakly interconnected._
 - **Why does `ask()` connect `LLM Configuration and RAG QA` to `API Endpoints and Agent Loop`, `Chunking and Vector Storage`?**
   _High betweenness centrality (0.014) - this node is a cross-community bridge._
 - **Should `Architecture and Design Docs` be split into smaller, more focused modules?**
